@@ -1,0 +1,22 @@
+
+#cv {
+    width: 400px;
+    height: 600px;
+    border: 1px solid black;
+}
+
+#wrapper {
+    width: 960px;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+}
+
+#output {
+    position: absolute;
+    display: block;
+    top: 100px;
+    left: 20px;
+    width: 320px;
+    height: 500px;
+}
