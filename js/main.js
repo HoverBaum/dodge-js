@@ -10,16 +10,21 @@ require([
 	"Game"
 	], 
 		
-	function(util, game) {
+	function(util, Game) {
     
 		log('starting');
 
 		//Global variable to hold the drawer.
-		drawer = new Worker('js/drawer.js');
-		drawer.postMessage({"code": "draw"});
+		//drawer = new Worker('js/drawer.js');
+		//drawer.postMessage({"code": "draw"});
 
 	//	startTick();
 
-		var player = new entity(0,0,game);
-	
+		var game = new Game();
+		var player = new entity(0, 0, "#FFD630", game);
+		game.player = player;
+		
+		window.addEventListener("keypress", game.input);
+		
+game.tick();
 });
