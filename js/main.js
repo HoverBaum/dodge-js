@@ -5,12 +5,21 @@
     
 */
 
-require(["util"], function(util) {
+require([
+	"util", 
+	"Game"
+	], 
+		
+	function(util, game) {
     
-    log('starting');
-    
-    //Global variable to hold the drawer.
-    drawer = new Worker('js/drawer.js');
-    drawer.postMessage({"code": "draw"});
-    
+		log('starting');
+
+		//Global variable to hold the drawer.
+		drawer = new Worker('js/drawer.js');
+		drawer.postMessage({"code": "draw"});
+
+	//	startTick();
+
+		var player = new entity(0,0,game);
+	
 });
