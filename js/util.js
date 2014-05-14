@@ -11,7 +11,7 @@ function slog(str, scope) {
 }
 
 function realLog(str) {
-	document.getElementById("output").innerHTML += str + '<br />';
+	//document.getElementById("output").innerHTML += str + '<br />';
     console.log(str);
 }
 

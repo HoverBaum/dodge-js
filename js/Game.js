@@ -5,10 +5,12 @@ define([
 		
 	function(util, Entity) {
     
-        var width = 400;
-        var height = 600;
-        var speed = 4;
-        
+		
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        var speed = 4;						//Speed of the player per tick.
+		var chance = 0.2; 					//Chance with which new Entities are added per tick.
+		
 		var Game = function() {
 			this.entities = entities;
 			this.player = null; 
@@ -17,9 +19,14 @@ define([
             var cv = document.getElementById("cv");
             cv.width = width;
             cv.height = height;
+			this.calculateChance();
 		}
 		
 		var entities = new Array();
+		
+		Game.prototype.calculateChance = function() {
+			 chance = width / 400 * 0.2;
+		}
 		
 		Game.prototype.addEntity = function(ent) {
 			entities.push(ent);
@@ -65,7 +72,7 @@ define([
         }
         
         Game.prototype.newEnemy = function() {
-            if(Math.random() > 0.2) {
+            if(Math.random() > chance) {
                 return;
             }
             var x = Math.random() * width;
@@ -83,8 +90,8 @@ define([
             if(this.player.x < 0) {
                 this.player.x = 0;
             }
-            if(this.player.x > cv.width-20) {
-                this.player.x = cv.width-20;
+            if(this.player.x > width-20) {
+                this.player.x = width-20;
             }
         }
 		
@@ -92,7 +99,8 @@ define([
 			var cv = document.getElementById("cv");
 			var ctx = cv.getContext("2d");
 			
-			cv.width = width;
+			cv.width = window.innerWidth;
+			cv.height = window.innerHeight;
 			
 			ctx.fillStyle = "#64D448";
 			ctx.fillRect(0, height-22, width, 23);
@@ -132,6 +140,27 @@ define([
                 }
             }
         }
+		
+		Game.prototype.resize = function() {
+			
+			var self = this;
+			
+			return function(e) {
+				var xScale = window.innerWidth / width;
+				var yScale = window.innerHeight / height;
+				self.player.x = self.player.x * xScale;
+				self.player.y = window.innerHeight - 10 - 50;
+				for(var i = 0; i < entities.length; i++) {
+					entities[i].x = entities[i].x * xScale;
+					entities[i].y = entities[i].y * yScale;
+				}
+				width = window.innerWidth;
+				height = window.innerHeight;
+				self.calculateChance();
+				self.draw();
+			}
+			
+		}
 		
 		slog("returning Game Object", "game");
 		return Game;

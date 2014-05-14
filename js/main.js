@@ -21,7 +21,9 @@ require([
 
 
 		game = new Game();
-		var player = new Entity(50, 540, "#FFD630");
+		var playerY = window.innerHeight - 10 - 50;
+		var playerX = window.innerWidth * 0.5;
+		var player = new Entity(playerX, playerY, "#FFD630");
 		game.player = player;
 		
         console.log(game.player);
@@ -29,10 +31,8 @@ require([
 		//window.onkeypress = game.input();
 		window.onkeydown = game.onDown();
         window.onkeyup = game.onUp();
-game.tick();
-        
-       startTick();
+        window.onresize = game.resize();
 		
-		
-		
+		startTick();
+				
 });
