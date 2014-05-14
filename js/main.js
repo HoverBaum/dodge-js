@@ -32,4 +32,7 @@ require([
 game.tick();
         
        startTick();
+		
+		
+		
 });

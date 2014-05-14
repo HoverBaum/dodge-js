@@ -7,7 +7,7 @@ define([
     
         var width = 400;
         var height = 600;
-        var speed = 7;
+        var speed = 4;
         
 		var Game = function() {
 			this.entities = entities;
@@ -34,15 +34,38 @@ define([
             this.movePlayer();
             this.newEnemy();
             this.moveEntities();
+			this.checkCollision();
 			this.draw();
 		}
-        
+
+		Game.prototype.checkCollision = function() {
+			for(var i = 0; i < entities.length; i++) {
+				var ent = entities[i];
+				var player = this.player;
+				if(ent.x + 10 >= player.x && ent.x <= player.x + 20) {
+					if(ent.y+10 >= player.y) {
+						this.lost();
+					}
+				}
+			}
+		}
+		
+		Game.prototype.lost = function() {
+			stopTick();
+			log("You Lost");
+		}
+		
         Game.prototype.moveEntities = function() {
-            
+			for(var i = 0; i < entities.length; i++) {
+				entities[i].y += speed/2;
+				if(entities[i].y > height-20) {
+					this.removeEntity(entities[i]);
+				}
+			}
         }
         
         Game.prototype.newEnemy = function() {
-            if(Math.random() > 0.5) {
+            if(Math.random() > 0.2) {
                 return;
             }
             var x = Math.random() * width;
@@ -83,32 +106,6 @@ define([
                     ctx.fillStyle = ent.color;
                     ctx.fillRect(ent.x, ent.y, 10, 10);
                 }
-            }
-		}
-		
-		Game.prototype.input = function() {
-			//A = 97   D = 100
-            
-			var player = this.player;
-            var self = this;
-            var speed = 5;
-            
-            return function(e) {
-                if(e.keyCode === 97) {
-                    //Move player left
-                    player.x -= speed;
-                    if(player.x < 0) {
-                        player.x = 0;
-                    }
-                } else if(e.keyCode === 100) {
-                    //Move player right
-                    player.x += speed;
-                    var cv = document.getElementById("cv");
-                    if(player.x > cv.width-10) {
-                        player.x = cv.width-10;
-                    }
-                }
-                self.draw();
             }
 		}
         

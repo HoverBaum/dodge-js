@@ -21,9 +21,13 @@ function tick() {
 }
 
 function startTick() {
-	tickInterval = setInterval(tick, 30);
+	tickInterval = setInterval(tick, 20);
 }
 
 function stopTick() {
-	tickInterval = null;
+	clearInterval(tickInterval);
 }
+
+function test() {
+			console.log(game.entities);
+		}
