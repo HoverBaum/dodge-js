@@ -5,11 +5,12 @@ define([
 	function() {
 		
 				
-		entity = function(x, y, clr, game) {
+		var Entity = function(x, y, clr) {
 			this.x = x;		//Top left corner
 			this.y = y;
 			this.color = clr;
-			game.addEntity(this);
 		}
+        
+        return Entity;
 	
 });

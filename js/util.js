@@ -16,12 +16,12 @@ function realLog(str) {
 }
 
 function tick() {
-    log('tick');
-    drawer.postMessage();
+   // log('tick');
+    game.tick();
 }
 
 function startTick() {
-	tickInterval = setInterval(tick, 1000);
+	tickInterval = setInterval(tick, 30);
 }
 
 function stopTick() {

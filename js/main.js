@@ -7,10 +7,11 @@
 
 require([
 	"util", 
-	"Game"
+	"Game",
+    "Entity"
 	], 
 		
-	function(util, Game) {
+	function(util, Game, Entity) {
     
 		log('starting');
 
@@ -18,13 +19,17 @@ require([
 		//drawer = new Worker('js/drawer.js');
 		//drawer.postMessage({"code": "draw"});
 
-	//	startTick();
 
-		var game = new Game();
-		var player = new entity(0, 0, "#FFD630", game);
+		game = new Game();
+		var player = new Entity(50, 540, "#FFD630");
 		game.player = player;
 		
-		window.addEventListener("keypress", game.input);
-		
+        console.log(game.player);
+        
+		//window.onkeypress = game.input();
+		window.onkeydown = game.onDown();
+        window.onkeyup = game.onUp();
 game.tick();
+        
+       startTick();
 });
