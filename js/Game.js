@@ -146,9 +146,9 @@ define([
             var self = this;
             
             return function(e) {
-                if(e.keyCode === 65) {
+                if(e.keyCode === 65 || e.keyCode === 37) {
                     self.left = true;
-                }else if(e.keyCode === 68) {
+                }else if(e.keyCode === 68 || e.keyCode === 39) {
                     self.right = true;
                 }
             }
@@ -158,9 +158,9 @@ define([
             var self = this;
             
             return function(e) {
-                if(e.keyCode === 65) {
+                if(e.keyCode === 65 || e.keyCode === 37) {
                     self.left = false;
-                }else if(e.keyCode === 68) {
+                }else if(e.keyCode === 68 || e.keyCode === 39) {
                     self.right = false;
                 }
             }
