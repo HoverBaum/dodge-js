@@ -1,8 +1,10 @@
 html, body {
 	height: 100%;
+	min-width: 320px;
 	width: 100%;
 	margin: 0;
 	padding: 0;
+	font-family: sans-serif;
 }
 
 #cv {
@@ -11,21 +13,52 @@ html, body {
     padding: 0;
 	margin: 0;
 	display: block;
+	z-index: 0;
 }
 
-#wrapper {
-    width: 960px;
-    margin: 0 auto;
-    display: block;
-    text-align: center;
-}
-
-#outputWrapper {
+#HUD {
 	position: absolute;
-    display: block;
-    top: 130px;
-    left: 20px;
-    width: 320px;
-    height: 500px;
-	border: 1px solid black;
+	z-index: 5;
+	top: 20px;
+	right: 20px;
+	padding: 5px;
+	display: block;
+	background-color: #f8f8f8;
+	-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	border-radius: 3px;
+}
+
+#HUD > #time {
+	display: block;
+}
+
+#HUD > #time > span {
+	float: right;
+}
+
+#HUD > h1 {
+	font-size: 22px;
+	margin: 0;
+	margin-bottom: 5px;
+}
+
+#HUD > #difficulty {
+	display: block;
+	position: relative;
+}
+
+#HUD > #difficulty > span {
+	float: right;
+}
+
+#HUD > #difficulty > #level-line-js {
+	position: absolute;
+	display: block;
+	top: 100%;
+	left: 0;
+	min-width: 1px;
+	height: 1px;
+	background-color: black;
 }

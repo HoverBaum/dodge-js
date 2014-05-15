@@ -8,8 +8,10 @@ define([
 		
         var width = window.innerWidth;
         var height = window.innerHeight;
+		var entSpeed = 2;					//Speed of entities.
         var speed = 4;						//Speed of the player per tick.
 		var chance = 0.2; 					//Chance with which new Entities are added per tick.
+		var difficulty = 1;
 		
 		var Game = function() {
 			this.entities = entities;
@@ -19,13 +21,22 @@ define([
             var cv = document.getElementById("cv");
             cv.width = width;
             cv.height = height;
+			
+			var d = new Date();
+			this.startTime = d.getTime();
+			this.lastDiffInc = this.startTime;		//Last time the difficulty rose.
 			this.calculateChance();
 		}
 		
 		var entities = new Array();
 		
 		Game.prototype.calculateChance = function() {
-			 chance = width / 400 * 0.2;
+			var d = new Date();
+			if(d.getTime() - this.lastDiffInc > 20000) {
+				difficulty++;
+				this.lastDiffInc = d.getTime();
+			}
+			chance = width / 400 * 0.2 * difficulty;
 		}
 		
 		Game.prototype.addEntity = function(ent) {
@@ -39,12 +50,25 @@ define([
 
 		Game.prototype.tick = function() {
             this.movePlayer();
-            this.newEnemy();
+            this.calculateChance();
+			this.newEnemy();
             this.moveEntities();
 			this.checkCollision();
 			this.draw();
+			
+			this.displayHUD();
+			
 		}
 
+		Game.prototype.displayHUD = function() {
+			var d = new Date();
+			document.getElementById("time-js").innerHTML = Math.floor((d.getTime() - this.startTime) / 1000) + 's';
+			document.getElementById("difficulty-js").innerHTML = difficulty;
+			
+			var progress = (d.getTime() - this.lastDiffInc) / 1000 * 5 ;
+			document.getElementById("level-line-js").setAttribute("style", "width:" + progress + "%;");
+		}
+		
 		Game.prototype.checkCollision = function() {
 			for(var i = 0; i < entities.length; i++) {
 				var ent = entities[i];
@@ -64,7 +88,7 @@ define([
 		
         Game.prototype.moveEntities = function() {
 			for(var i = 0; i < entities.length; i++) {
-				entities[i].y += speed/2;
+				entities[i].y += entSpeed;
 				if(entities[i].y > height-20) {
 					this.removeEntity(entities[i]);
 				}
@@ -75,10 +99,11 @@ define([
             if(Math.random() > chance) {
                 return;
             }
-            var x = Math.random() * width;
-            var y = 0;
-            var ent = new Entity(x, y, "#000");
-            this.addEntity(ent);
+						
+			var x = Math.random() * width;
+			var y = 0;
+			var ent = new Entity(x, y, "#000");
+			this.addEntity(ent);
         }
         
         Game.prototype.movePlayer = function() {
