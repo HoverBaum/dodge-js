@@ -9,10 +9,11 @@ define([
         var width = window.innerWidth;
         var height = window.innerHeight;
 		var entSpeed = 2;					//Speed of entities.
-        var speed = 4;						//Speed of the player per tick.
+        var speed = 3;						//Speed of the player per tick.
 		var chance = 0.2; 					//Chance with which new Entities are added per tick.
 		var difficulty = 1;
 		
+		//Constructor for a Game.
 		var Game = function() {
 			this.entities = entities;
 			this.player = null; 
@@ -30,6 +31,7 @@ define([
 		
 		var entities = new Array();
 		
+		//calculates the chance for a drop.
 		Game.prototype.calculateChance = function() {
 			var d = new Date();
 			if(d.getTime() - this.lastDiffInc > 20000) {
@@ -48,6 +50,7 @@ define([
 			entities.splice(i,1);
 		}
 
+		//The tick is what makes the game fo round.
 		Game.prototype.tick = function() {
             this.movePlayer();
             this.calculateChance();
@@ -88,7 +91,7 @@ define([
 		
         Game.prototype.moveEntities = function() {
 			for(var i = 0; i < entities.length; i++) {
-				entities[i].y += entSpeed;
+				entities[i].y += entSpeed + difficulty;
 				if(entities[i].y > height-20) {
 					this.removeEntity(entities[i]);
 				}
