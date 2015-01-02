@@ -38,7 +38,7 @@ define([
 				difficulty++;
 				this.lastDiffInc = d.getTime();
 			}
-			chance = width / 400 * 0.2 * difficulty;
+			chance = width / 400 * 0.2;
 		}
 		
 		Game.prototype.addEntity = function(ent) {
@@ -54,7 +54,9 @@ define([
 		Game.prototype.tick = function() {
             this.movePlayer();
             this.calculateChance();
-			this.newEnemy();
+			for(var i = 0; i < difficulty; i++) {
+				this.newEnemy();
+			}
             this.moveEntities();
 			this.checkCollision();
 			this.draw();
