@@ -89,6 +89,9 @@ define([
 		Game.prototype.lost = function() {
 			stopTick();
 			log("You Lost");
+			if(confirm('Press Enter to play again')) {
+				location.reload();
+			}
 		}
 		
         Game.prototype.moveEntities = function() {
