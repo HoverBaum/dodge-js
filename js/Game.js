@@ -12,6 +12,7 @@ define([
         var speed = 3;						//Speed of the player per tick.
 		var chance = 0.2; 					//Chance with which new Entities are added per tick.
 		var difficulty = 1;
+		var cv = null; 						//The canvas to draw upon
 		
 		//Constructor for a Game.
 		var Game = function() {
@@ -89,9 +90,13 @@ define([
 		Game.prototype.lost = function() {
 			stopTick();
 			log("You Lost");
-			if(confirm('Press Enter to play again')) {
+			document.getElementById("endgame").style.display = "block";
+			document.getElementById("endgame").style.opacity = "1";
+			var d = new Date();
+			document.getElementById("eg-time").innerHTML = Math.floor((d.getTime() - this.startTime) / 1000);
+			document.getElementById("play-again").addEventListener("click",function() {
 				location.reload();
-			}
+			})
 		}
 		
         Game.prototype.moveEntities = function() {
