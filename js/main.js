@@ -32,6 +32,12 @@ require([
 		window.onkeydown = game.onDown();
         window.onkeyup = game.onUp();
         window.onresize = game.resize();
+	
+		window.ontouchstart = game.onTouchStart();
+		window.ontouchend = game.onTouchEnd();
+	
+		window.onblur = game.pause();
+	window.onfocus = game.continue();
 		
 		startTick();
 				

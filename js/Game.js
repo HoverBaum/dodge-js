@@ -179,6 +179,54 @@ define([
             }
         }
 		
+		Game.prototype.onTouchStart = function() {
+			var self = this;
+			
+			return function(e) {
+				
+				e.x = e.touches[0].pageX;
+				var player = self.player;
+				var center = player.x + 10;
+				if(e.x < center) {
+					self.left = true;
+					self.right = false;
+				} else {
+					self.right = true;
+					self.left = false;
+				}
+			}
+		}
+		
+		Game.prototype.onTouchEnd = function() {
+			var self = this;
+			return function(e) {
+				self.left = false;
+				self.right = false;
+			}
+			
+		}
+		
+		Game.prototype.pause = function() {
+			var self = this;
+			return function() {
+				stopTick();
+				self.pausStart = new Date().getTime();
+			}
+		}
+		
+		Game.prototype.continue = function() {
+			var self = this;
+			return function() {
+				console.log(self.startTime);
+				var pausedFor = new Date().getTime() - self.pausStart;
+				self.startTime += pausedFor;
+				console.log(self.startTime);
+				startTick();
+				console.log("continue");
+			}
+			
+		}
+		
 		Game.prototype.resize = function() {
 			
 			var self = this;
